@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Extracted Text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style>
+      .container {
+        max-width: 1000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">c
+          <h1>Extracted text</h1>
+          <br>
+          {% for result in results['text']%}
+            <h5>{{ result }}</h5><hr>
+          {% endfor %}
+          <br>
+          {% for error in errors %}
+            <h4>{{ error }}</h4>
+          {% endfor %}
+          <br>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="window.location.href= '/home'" />Upload More</button>
+        </div>
+        <div class="col-sm-5 col-sm-offset-1">
+          {% if results %}
+            <h2>Associate Table</h2>
+            <br>
+            <div id="results">
+            {%for table in results['multiple_tables']%}
+              <table class="table table-striped" style="max-width: 300px;">
+                <thead>
+                  <tr>
+                    {% for result in table['columns']%}
+                    <th>{{ result }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                {% for result in table['rows']%}
+                  <tr>
+                    {% for row_data in result%}
+                      <td>{{ result[row_data] }}</td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </table>
+              <hr>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+        $(".home-button").on("click",function(){
+            $.ajax({
+            type:"GET",
+            url:"/home",
+            success:function(data){
+            }
+        });
+        });
+    </script>
+  </body>
+</html>
