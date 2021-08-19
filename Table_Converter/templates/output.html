@@ -6,14 +6,33 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
       .container {
-        max-width: 1000px;
+        max-width: 1190px;
+        
       }
+      .col-sm-offset-1 {
+    margin-left: -3.666667%;
+    margin-right: 10px;
+}
+
     </style>
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-sm-5 col-sm-offset-1">c
+        <div>
+          <button class="btn btn-primary" style="margin-left: 520px;" onclick="window.location.href= '/home'" />Upload More</button>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1">
+          <h1>Document Result</h1>
+          <br>
+          {% if results %}
+            {% if 'document_result' in results %}
+            <p>{{ results['document_result'] }}</p>
+            {% endif %}
+
+          {% endif %}
+        </div>
+        <div class="col-sm-5 col-sm-offset-1">
           <h1>Extracted text</h1>
           <br>
           {% for result in results['text']%}
@@ -24,9 +43,6 @@
             <h4>{{ error }}</h4>
           {% endfor %}
           <br>
-        </div>
-        <div>
-            <button class="btn btn-primary" onclick="window.location.href= '/home'" />Upload More</button>
         </div>
         <div class="col-sm-5 col-sm-offset-1">
           {% if results %}

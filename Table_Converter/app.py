@@ -7,11 +7,14 @@ from IPython.display import display
 app = Flask(__name__)
 
 
+API_version = "v2.1"
+
 # Endpoint URL
 endpoint = r"https://rnd.cognitiveservices.azure.com/"
 apim_key = "6a920a79fbc2465fa1bc9bd94ef59e7e"
-post_url = endpoint + "/formrecognizer/v2.1/layout/analyze"
-source = r"/Users/User/Downloads/CMS-460-508 Tan enabled (1) (1).pdf"
+model_id = "59deeb47-4548-4764-8dd2-a3e8d64f99f5"
+#post_url = endpoint + "/formrecognizer/v2.1/layout/analyze"
+post_url = endpoint + "/formrecognizer/%s/custom/models/%s/analyze" % (API_version, model_id)
 
 headers = {
 # Request headers
@@ -105,6 +108,10 @@ def extract_pdf():
                 final_df.append({'rows':df_dataframe,'columns':columns})
                 #print(df)
         
+            if 'documentResults' in resp_json["analyzeResult"]:
+                print('-------------------------------------------')
+                print(resp_json["analyzeResult"]["documentResults"])
+                multiple_table_entries['document_result'] = resp_json["analyzeResult"]["documentResults"]
         
         multiple_table_entries['text'] = Exctracted_text
         multiple_table_entries['multiple_tables'] = final_df
